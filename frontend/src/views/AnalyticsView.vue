@@ -1,0 +1,26 @@
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import { api, type Data } from '../api/client'
+import { useRequest } from '../composables/useRequest'
+import PageHeader from '../components/PageHeader.vue'
+import Icon from '../components/Icon.vue'
+import EmptyState from '../components/EmptyState.vue'
+import BarChart from '../components/BarChart.vue'
+
+const { run, busy, error } = useRequest(); const overview = ref<Data | null>(null); const summary = ref<Data | null>(null); const reports = ref<Data[]>([]); const selectedId = ref(''); const period = ref('weekly')
+const selected = computed(() => reports.value.find(x => x.id === selectedId.value))
+const maxSubject = computed(() => Math.max(1, ...(overview.value?.subjects || []).map((x: Data) => x.minutes)))
+const stats = computed(() => overview.value && summary.value ? [{ label: '累计学习时长', value: overview.value.total_minutes, unit: '分钟', icon: 'clock', note: '来自真实学习记录' }, { label: '答题正确率', value: overview.value.accuracy == null ? '—' : overview.value.accuracy, unit: '%', icon: 'question', note: `${overview.value.question_records} 次答题 · ${overview.value.mastery_status}` }, { label: '已完成任务', value: summary.value.task_done, unit: '项', icon: 'check', note: `累计 ${summary.value.task_total} 项任务` }, { label: '学习资料', value: summary.value.documents, unit: '份', icon: 'file', note: '属于当前账户的文档' }] : [])
+async function refresh() { const [o, s, r] = await Promise.all([api.get('/analytics/overview'), api.get('/dashboard/summary'), api.get<Data[]>('/reports')]); overview.value = o; summary.value = s; reports.value = r; if (!r.some(x => x.id === selectedId.value)) selectedId.value = r[0]?.id || '' }
+async function load() { await run(refresh) }
+async function generate() { await run(async () => { const result = await api.post('/reports', { period: period.value }); await refresh(); selectedId.value = result.id }, '报告已保存') }
+function sourceLabel(item: Data) { return item.source === 'data_summary' ? '数据库统计摘要' : '历史报告' }
+onMounted(load)
+</script>
+<template><section class="page">
+  <PageHeader title="数据与报告" eyebrow="看见学习留下的真实轨迹" description="不预填成绩，不虚构时长。每张图表都来自你的实际学习记录。"><RouterLink class="secondary" to="/learning?tab=records"><Icon name="plus" :size="17" /> 记录学习</RouterLink><button class="secondary" :disabled="busy" @click="load"><Icon name="refresh" :size="17" /> 刷新数据</button></PageHeader>
+  <div v-if="error" class="error-banner" role="alert">{{ error }}<button class="text-button" :disabled="busy" @click="load">重试</button></div><div v-if="busy && !overview" class="loading-panel">正在聚合学习数据…</div>
+  <div class="stat-grid"><article v-for="(stat, index) in stats" :key="stat.label" class="stat-card" :class="{ accent: index === 0 }"><div class="stat-top"><span>{{ stat.label }}</span><div class="stat-icon"><Icon :name="stat.icon" /></div></div><div class="stat-value">{{ stat.value }}<small>{{ stat.unit }}</small></div><div class="stat-note">{{ stat.note }}</div></article></div>
+  <div v-if="overview" class="analytics-columns"><section class="panel"><div class="panel-head"><div><h2>近 14 天学习趋势</h2><p>按账户时区聚合 · 单位：分钟</p></div><span class="pill">真实记录</span></div><BarChart :items="overview.trend || []" /><p class="chart-caption">零分钟的日期不会被显示为有学习时长。</p></section><section class="panel"><div class="panel-head"><div><h2>学科时间分布</h2><p>累计记录 · 按实际分钟统计</p></div></div><div class="subject-list"><div v-for="subject in overview.subjects || []" :key="subject.subject" class="subject-row"><div><strong>{{ subject.subject }}</strong><span>{{ subject.minutes }} 分钟</span></div><div class="progress"><span :style="{ width: `${subject.minutes / maxSubject * 100}%` }"></span></div></div><EmptyState v-if="!overview.subjects?.length" title="还没有学科数据" description="记录一段已完成的学习，这里才会出现分布。" icon="chart" /></div></section></div>
+  <section class="panel reports-section"><div class="panel-head wrap"><div><h2>学习报告</h2><p>日报与周报完全基于真实学习记录，不调用外部生成服务。</p></div><div class="button-row"><select v-model="period" aria-label="报告周期" :disabled="busy"><option value="daily">日报</option><option value="weekly">周报</option></select><button class="primary" :disabled="busy" @click="generate"><Icon name="spark" :size="17" /> {{ busy ? '正在处理…' : '生成报告' }}</button></div></div><div v-if="reports.length" class="report-layout"><aside class="report-list"><button v-for="report in reports" :key="report.id" class="master-item" :class="{ selected: selectedId === report.id }" @click="selectedId = report.id"><strong>{{ report.title }}</strong><span>{{ new Date(report.created_at).toLocaleString('zh-CN') }}</span><small>{{ sourceLabel(report) }}</small></button></aside><article v-if="selected" class="report-body"><div class="meta-row"><span class="pill">{{ sourceLabel(selected) }}</span><span>{{ selected.report_type === 'daily' ? '日报' : selected.report_type === 'weekly' ? '周报' : selected.report_type }}</span></div><h2>{{ selected.title }}</h2><p class="report-text">{{selected.content||''}}</p><details class="data-details"><summary>查看报告所依据的统计快照</summary><pre class="json-result">{{ JSON.stringify(selected.metrics || {}, null, 2) }}</pre></details></article></div><EmptyState v-else-if="overview" title="为这段学习留一份复盘" description="选择日报或周报，生成第一份基于真实数据的报告。" icon="file" /></section>
+</section></template>

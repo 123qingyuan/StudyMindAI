@@ -1,0 +1,29 @@
+{
+  "name": "studymind-ai-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173",
+    "build": "vite build",
+    "typecheck": "vue-tsc --noEmit",
+    "preview": "vite preview --host 127.0.0.1 --port 4173"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "latest",
+    "dompurify": "latest",
+    "element-plus": "latest",
+    "highlight.js": "latest",
+    "katex": "latest",
+    "markdown-it": "latest",
+    "pinia": "latest",
+    "vite": "latest",
+    "vue": "latest",
+    "vue-router": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "latest",
+    "typescript": "5.9.3",
+    "vue-tsc": "3.3.11"
+  }
+}

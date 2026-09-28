@@ -1,0 +1,18 @@
+<script setup lang="ts">
+import { onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { api, type Data } from '../api/client'
+import { useRequest } from '../composables/useRequest'
+import { useAuthStore } from '../stores/auth'
+import { confirmAction } from '../lib/ui'
+import PageHeader from '../components/PageHeader.vue'
+import Icon from '../components/Icon.vue'
+const auth=useAuthStore(),router=useRouter();const {run,busy,error}=useRequest();const health=ref<Data|null>(null),healthError=ref('')
+const profile=reactive({display_name:auth.user?.display_name||'',timezone:auth.user?.timezone||'Asia/Shanghai'})
+async function refreshHealth(){healthError.value='';try{health.value=await api.get('/health')}catch(e){healthError.value=(e as Error).message}}
+async function load(){await run(async()=>{const user=await api.get('/auth/me');profile.display_name=user.display_name;profile.timezone=user.timezone});await refreshHealth()}
+async function saveProfile(){await run(async()=>{await api.patch('/users/me',{...profile});await auth.hydrate()},'账户资料已更新')}
+async function logout(){if(!await confirmAction('退出当前会话？服务器会立即撤销本次登录令牌。','安全退出'))return;try{await auth.logout()}catch{error.value='本地会话已清除，但服务器注销请求失败。'}await router.replace('/login')}
+onMounted(load)
+</script>
+<template><section class="page settings-page"><PageHeader title="空间设置" eyebrow="自己的学习，自己的选择" description="管理账户、本地知识检索与会话安全"><button class="secondary" :disabled="busy" @click="load"><Icon name="refresh" :size="17"/>重新读取</button></PageHeader><p v-if="error" class="error-banner">{{error}}</p><div class="settings-layout"><div class="settings-column"><section class="panel settings-card"><div class="panel-head"><div><h2>账户信息</h2><p>学习数据按账户隔离</p></div><Icon name="shield"/></div><div class="profile-large"><div class="avatar big">{{auth.initials}}</div><div><strong>{{auth.user?.display_name}}</strong><span>{{auth.user?.email}}</span></div></div><form class="stack-form pad" @submit.prevent="saveProfile"><fieldset :disabled="busy"><label>你的称呼<input v-model.trim="profile.display_name" required maxlength="40"/></label><label>统计时区<input v-model.trim="profile.timezone" list="timezones" required/><datalist id="timezones"><option value="Asia/Shanghai"/><option value="Asia/Tokyo"/><option value="Europe/London"/><option value="America/New_York"/><option value="UTC"/></datalist></label><p class="field-help">时区影响今日统计、课程与日期分组。</p></fieldset><button class="primary" :disabled="busy">保存账户信息</button></form></section><section class="panel settings-card"><div class="panel-head"><h2>会话安全</h2><Icon name="shield"/></div><div class="pad"><p class="muted">登录凭证只保存在当前浏览器会话。退出后服务器会立即撤销本次令牌。</p><button class="danger full" :disabled="busy" @click="logout"><Icon name="logout" :size="16"/>安全退出</button></div></section></div><section class="panel settings-card"><div class="panel-head"><div><h2>本地服务状态</h2><p>StudyMind 已移除生成式 AI，仅保留本地学习与知识功能</p></div><button class="icon-button" aria-label="刷新本地服务状态" @click="refreshHealth"><Icon name="refresh"/></button></div><div class="pad"><p v-if="healthError" class="error-banner">{{healthError}}</p><template v-if="health"><div v-for="item in [{label:'服务',value:health.status},{label:'数据库',value:health.database},{label:'文字识别',value:health.ocr},{label:'向量存储',value:health.vector_store},{label:'本地嵌入',value:health.embedding},{label:'版本',value:health.version}]" :key="item.label" class="info-line"><span>{{item.label}}</span><strong>{{item.value||'未返回'}}</strong></div></template><div class="local-first-card"><Icon name="layers" :size="24"/><div><strong>本地知识优先</strong><p>文档解析、OCR、分块、索引、检索和题库评分均在本地服务完成。</p></div></div></div></section></div></section></template>
