@@ -15,7 +15,7 @@ from typing import Any
 from . import core
 from .document.parser import Page, chunks
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = core.ROOT
 VERSION = "builtin-v2"
 MANIFEST = ROOT / "data" / "question_bank_manifest.json"
 

@@ -21,7 +21,7 @@ from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from .database import Database
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(os.getenv('STUDYMIND_BUNDLE_ROOT', str(Path(__file__).resolve().parents[2])))
 if os.getenv('STUDYMIND_TESTING') != '1': load_dotenv(ROOT / 'backend' / '.env', override=False)
 DATA_DIR = Path(os.getenv('STUDYMIND_DATA_DIR', str(ROOT / 'data')))
 UPLOAD_DIR = DATA_DIR / 'uploads'

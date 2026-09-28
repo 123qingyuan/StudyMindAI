@@ -19,7 +19,10 @@ LOCAL_MODEL = 'BAAI/bge-small-zh-v1.5'
 
 
 def vector_client():
-    from qdrant_client import QdrantClient
+    try:
+        from qdrant_client import QdrantClient
+    except ImportError:
+        raise RuntimeError('Qdrant component is not included in this desktop build') from None
     server = os.getenv('QDRANT_URL', '')
     path = str(Path(core.DATA_DIR) / 'qdrant')
     key = server or path
@@ -134,7 +137,10 @@ async def index_document(document_id, user_id):
 
 
 def delete_vectors(document_id, user_id):
-    from qdrant_client import models
+    try:
+        from qdrant_client import models
+    except ImportError:
+        return
     with _LOCK:
         client = vector_client()
         selector = models.FilterSelector(filter=models.Filter(must=[
