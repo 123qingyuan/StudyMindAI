@@ -17,9 +17,11 @@ hiddenimports = collect_submodules('app') + [
     'uvicorn.protocols.websockets.auto', 'uvicorn.lifespan.on',
     'sqlalchemy.dialects.sqlite', 'sqlalchemy.dialects.mysql.pymysql',
     'pydantic.deprecated.decorator', 'zoneinfo', 'tzdata',
+    'webview.platforms.edgechromium', 'webview.platforms.winforms',
+    'clr', 'pythonnet',
 ]
 
-for package in ('rapidocr_onnxruntime', 'onnxruntime', 'pymupdf', 'PIL', 'sklearn', 'scipy', 'numpy', 'cryptography', 'argon2'):
+for package in ('rapidocr_onnxruntime', 'onnxruntime', 'pymupdf', 'PIL', 'sklearn', 'scipy', 'numpy', 'cryptography', 'argon2', 'webview', 'clr_loader'):
     package_datas, package_binaries, package_hidden = collect_all(package)
     datas += package_datas
     binaries += package_binaries

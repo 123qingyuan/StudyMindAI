@@ -22,7 +22,7 @@ Windows 也可双击根目录 `start.bat`。首次安装依赖并构建前端：
 
 ## Windows EXE
 
-执行 `scripts\\build_exe.bat` 可生成 `dist\\StudyMindAI.exe`。EXE 已内置前端、后端、OCR 运行组件和内置学习资料；双击后会在本机 `127.0.0.1:8765` 启动并打开浏览器，用户数据保存在 `%LOCALAPPDATA%\\StudyMindAI\\data`。
+执行 `scripts\\build_exe.bat` 可生成 `dist\\StudyMindAI.exe`。EXE 已内置前端、后端、OCR 运行组件和内置学习资料；双击后会打开独立的 StudyMind AI 应用窗口，界面由系统 WebView2 内嵌渲染，不会跳转到外部浏览器。用户数据保存在 `%LOCALAPPDATA%\\StudyMindAI\\data`。
 
 桌面版默认使用 SQLite 和关键词检索，因此干净的 Windows 电脑无需另装 Python、Node.js、MySQL 或 Qdrant。AI 模型可在应用设置中配置；语义嵌入仍建议使用源码部署版。
 
