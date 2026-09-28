@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+  <title id="title">StudyMind</title>
+  <desc id="desc">由打开的书页和思维火花组成的 StudyMind 标志</desc>
+  <defs>
+    <linearGradient id="bg" x1="12" y1="8" x2="84" y2="88" gradientUnits="userSpaceOnUse"><stop stop-color="#7167E8"/><stop offset="1" stop-color="#3D3A9C"/></linearGradient>
+    <linearGradient id="page" x1="26" y1="47" x2="69" y2="76" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#DCD9FF"/></linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="24" fill="url(#bg)"/>
+  <path d="M48 21c0 10 5.7 15.7 16 16-10.3.3-16 6-16 16 0-10-5.7-15.7-16-16 10.3-.3 16-6 16-16Z" fill="#FFF"/>
+  <circle cx="48" cy="37" r="3.2" fill="#2DD4BF"/>
+  <path d="M48 55c-8.7-2.9-16.8-2.2-23 2.8v17.8c7.1-3.6 15.1-3.7 23-.6V55Z" fill="url(#page)"/>
+  <path d="M48 55c8.7-2.9 16.8-2.2 23 2.8v17.8c-7.1-3.6-15.1-3.7-23-.6V55Z" fill="url(#page)"/>
+  <path d="M48 57.5v17.2M29 61.5c5.8-2.2 11.3-1.9 16.2-.4M67 61.5c-5.8-2.2-11.3-1.9-16.2-.4" fill="none" stroke="#8583D9" stroke-width="1.8" stroke-linecap="round" opacity=".7"/>
+</svg>

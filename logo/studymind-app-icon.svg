@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="StudyMind 应用图标">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 圆角方形背景 -->
+  <rect x="0" y="0" width="512" height="512" rx="116" fill="url(#bgGrad)"/>
+
+  <!-- 白色火花 -->
+  <path d="M256 96 Q256 188 372 188 Q256 188 256 280 Q256 188 140 188 Q256 188 256 96 Z" fill="#FFFFFF"/>
+
+  <!-- 白色书籍 -->
+  <path d="M256 336 C212 328 162 332 134 358 C127 363 125 371 129 378 L129 428 C129 434 135 436 141 434 C189 422 226 424 256 432 Z" fill="#FFFFFF"/>
+  <path d="M256 336 C300 328 350 332 378 358 C385 363 387 371 383 378 L383 428 C383 434 377 436 371 434 C323 422 286 424 256 432 Z" fill="#FFFFFF"/>
+
+  <!-- 书页纹理（用背景色做分隔） -->
+  <path d="M256 352 C226 348 202 350 182 360" fill="none" stroke="#A5B4FC" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+  <path d="M256 364 C232 360 210 362 194 370" fill="none" stroke="#A5B4FC" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+  <path d="M256 352 C286 348 310 350 330 360" fill="none" stroke="#A5B4FC" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+  <path d="M256 364 C280 360 302 362 318 370" fill="none" stroke="#A5B4FC" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- 灵感的火种 -->
+  <circle cx="256" cy="188" r="16" fill="#2DD4BF"/>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="StudyMind 应用图标">
+  <defs><linearGradient id="bg" x1="64" y1="40" x2="448" y2="472" gradientUnits="userSpaceOnUse"><stop stop-color="#7167E8"/><stop offset="1" stop-color="#3D3A9C"/></linearGradient><linearGradient id="page" x1="138" y1="250" x2="374" y2="408" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#DCD9FF"/></linearGradient></defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
+  <path d="M256 112c0 53 30 83 85 85-55 2-85 32-85 85 0-53-30-83-85-85 55-2 85-32 85-85Z" fill="#FFF"/>
+  <circle cx="256" cy="197" r="17" fill="#2DD4BF"/>
+  <path d="M256 293c-46-15-89-12-122 15v96c38-19 80-20 122-3v-108Z" fill="url(#page)"/><path d="M256 293c46-15 89-12 122 15v96c-38-19-80-20-122-3v-108Z" fill="url(#page)"/>
+  <path d="M256 306v93M156 330c31-12 60-10 86-2M356 330c-31-12-60-10-86-2" fill="none" stroke="#8583D9" stroke-width="10" stroke-linecap="round" opacity=".7"/>
+</svg>

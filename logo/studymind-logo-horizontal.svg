@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="240" viewBox="0 0 960 240" role="img" aria-label="StudyMind 横版标志">
+  <defs>
+    <linearGradient id="sparkGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#4F46E5"/>
+    </linearGradient>
+    <linearGradient id="bookGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#4338CA"/>
+    </linearGradient>
+    <linearGradient id="wordGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#4F46E5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 图标 -->
+  <g transform="translate(40, 24) scale(0.34)">
+    <path d="M256 80 Q256 180 376 180 Q256 180 256 280 Q256 180 136 180 Q256 180 256 80 Z" fill="url(#sparkGrad)"/>
+    <path d="M256 332 C210 324 160 328 130 356 C123 361 121 369 125 376 L125 428 C125 434 131 436 137 434 C187 422 225 424 256 432 Z" fill="url(#bookGrad)"/>
+    <path d="M256 332 C302 324 352 328 382 356 C389 361 391 369 387 376 L387 428 C387 434 381 436 375 434 C325 422 287 424 256 432 Z" fill="url(#bookGrad)"/>
+    <path d="M256 350 C224 346 200 348 178 358" fill="none" stroke="#C7D2FE" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+    <path d="M256 362 C230 358 208 360 190 368" fill="none" stroke="#C7D2FE" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+    <path d="M256 350 C288 346 312 348 334 358" fill="none" stroke="#C7D2FE" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+    <path d="M256 362 C282 358 304 360 322 368" fill="none" stroke="#C7D2FE" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+    <circle cx="256" cy="180" r="16" fill="#2DD4BF"/>
+    <circle cx="256" cy="180" r="16" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+  </g>
+
+  <!-- 文字标志 -->
+  <text x="218" y="146" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif" font-size="76" font-weight="800" letter-spacing="-1.5">
+    <tspan fill="#1E1B4B">Study</tspan><tspan fill="url(#wordGrad)">Mind</tspan>
+  </text>
+
+  <!-- 副标语 -->
+  <text x="220" y="188" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif" font-size="23" font-weight="500" letter-spacing="0.5" fill="#6B7280">个人学习空间 · Personal Learning Space</text>
+</svg>
