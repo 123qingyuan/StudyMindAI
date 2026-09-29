@@ -53,6 +53,12 @@
 
 ## 快速开始
 
+### Linux 服务器：Docker Compose 一键部署
+
+完整源码目录中运行 `bash deploy.sh`，默认仅本机 `http://127.0.0.1:8765`，SQLite + 关键词检索 + 单 worker，用户数据和加密密钥保存在命名卷。需预先安装 Docker Engine/Compose v2；不修改 Windows EXE、已有 `.env` 或用户数据。
+
+详细说明：[Linux 部署、HTTPS 反代、升级和备份](docs/LINUX.md)。本次开发机无 Docker/WSL Linux，**尚未完成 Linux 实跑验收**；已提供 Ubuntu 集成测试 workflow，待执行验证，不把 Windows 测试等同于 Linux 部署成功。
+
 ### 方案一：直接下载 Windows 桌面版
 
 1. 从 [最新版发布页](https://github.com/123qingyuan/StudyMindAI/releases/latest) 下载 `StudyMindAI.exe`。

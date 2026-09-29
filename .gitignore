@@ -13,7 +13,24 @@ backend/.env
 .env
 *.sqlite3
 backend/data/
-data/
+# Only these audited built-in fixtures may be redistributed; never user data.
+/data/*
+!/data/question_bank_manifest.json
+!/data/builtin/
+/data/builtin/*
+!/data/builtin/legacy-expansion-v1/
+/data/builtin/legacy-expansion-v1/*
+!/data/builtin/legacy-expansion-v1/manifest.json
+!/data/builtin/legacy-expansion-v1/01.md
+!/data/builtin/legacy-expansion-v1/02.md
+!/data/builtin/legacy-expansion-v1/03.md
+!/data/builtin/legacy-expansion-v1/04.md
+!/data/builtin/legacy-expansion-v1/05.md
+!/data/builtin/legacy-expansion-v1/06.md
+!/data/builtin/legacy-expansion-v1/07.md
+.env.linux
+.linux-test/
+backups/
 runtime/
 *.log
 .pytest_cache/

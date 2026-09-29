@@ -1,0 +1,55 @@
+name: Linux deployment integration
+on:
+  workflow_dispatch:
+  push:
+    paths: ['backend/**', 'frontend/**', 'data/**', 'scripts/seed_*.py', 'deploy/**', 'deploy.sh', 'Dockerfile', 'compose.yaml', '.dockerignore', '.github/workflows/linux-deploy.yml']
+  pull_request:
+    paths: ['backend/**', 'frontend/**', 'data/**', 'scripts/seed_*.py', 'deploy/**', 'deploy.sh', 'Dockerfile', 'compose.yaml', '.dockerignore', '.github/workflows/linux-deploy.yml']
+permissions:
+  contents: read
+jobs:
+  linux-amd64:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      COMPOSE_PROJECT_NAME: studymind-linux-ci
+      STUDYMIND_PORT: '18765'
+      STUDYMIND_BIND: '127.0.0.1'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and deploy actual Linux image
+        run: |
+          mkdir -p .linux-test
+          bash -n deploy.sh
+          bash deploy.sh 2>&1 | tee .linux-test/deploy.log
+      - name: HTTP registration, login, assets and provisioning
+        run: |
+          python3 deploy/linux/http_check.py create --state .linux-test/state.json | tee .linux-test/http-before.log
+          docker compose --env-file .env.linux exec -T app python /app/deploy/linux/runtime_check.py | tee .linux-test/runtime.log
+          docker compose --env-file .env.linux exec -T app python < deploy/linux/persistence_check.py | tee .linux-test/before.json
+      - name: Repeated deploy preserves config and state
+        run: |
+          sha256sum .env.linux > .linux-test/config.sha256
+          bash deploy.sh 2>&1 | tee .linux-test/redeploy.log
+          sha256sum --check .linux-test/config.sha256
+          docker compose --env-file .env.linux up -d --force-recreate --wait --wait-timeout 180
+          python3 deploy/linux/http_check.py verify --state .linux-test/state.json | tee .linux-test/http-after.log
+          docker compose --env-file .env.linux exec -T app python < deploy/linux/persistence_check.py | tee .linux-test/after.json
+          cmp .linux-test/before.json .linux-test/after.json
+      - name: Diagnostics
+        if: always()
+        run: |
+          docker compose --env-file .env.linux ps > .linux-test/compose-ps.log 2>&1 || true
+          docker compose --env-file .env.linux logs --no-color > .linux-test/container.log 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-deployment-evidence
+          path: |
+            .linux-test/*.log
+            .linux-test/before.json
+            .linux-test/after.json
+          if-no-files-found: warn
+      - name: Stop only this test project (keep volumes)
+        if: always()
+        run: docker compose --env-file .env.linux down --remove-orphans

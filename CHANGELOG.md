@@ -1,5 +1,11 @@
 # 更新记录
 
+## 未发布 — Linux Docker Compose 部署
+- 增加 `bash deploy.sh`、多阶段镜像、独立 Linux Python 3.12 哈希锁定依赖；修复 RapidOCR 不支持 Python 3.13 的 Linux 安装阻碍。
+- 非 root、只读根目录、回环绑定、健康等待、日志轮转及命名卷持久化 SQLite/上传/JWT 和 AI 加密密钥；不会覆盖已有配置。
+- 受控内置题库及旧版标记资料采用精确 Git/Docker 白名单；不打包用户数据。
+- 新增中文 HTTPS/备份/升级文档和 Ubuntu 集成测试。Windows 实测 API/OCR 通过，Linux 容器验证仍待有 Docker 的环境执行；未提交、未发布。
+
 ## 2.0.0 — 本地交付，未发布
 - 全局语义设计系统、蓝灰工作台与完整深/浅/跟随系统主题，登录与弹窗共用外观。
 - 主题持久化、首屏主题引导、运行中响应系统偏好；键盘焦点及 reduced-motion 支持。

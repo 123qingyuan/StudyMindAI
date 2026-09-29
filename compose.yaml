@@ -1,0 +1,35 @@
+name: studymind
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: studymind-ai:linux-local
+    # Initial support target: Linux x86_64 (including the OCR wheels).
+    platform: linux/amd64
+    user: "10001:10001"
+    init: true
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=256m,mode=1777
+    environment:
+      STUDYMIND_BUNDLE_ROOT: /app
+      STUDYMIND_DATA_DIR: /var/lib/studymind
+      DATABASE_URL: sqlite:////var/lib/studymind/studymind.sqlite3
+      EMBEDDING_MODE: keyword
+      AI_ALLOW_PRIVATE_ENDPOINTS: "false"
+    ports:
+      - "${STUDYMIND_BIND:-127.0.0.1}:${STUDYMIND_PORT:-8765}:8765"
+    volumes:
+      - app-data:/var/lib/studymind
+    stop_grace_period: 60s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+volumes:
+  app-data:

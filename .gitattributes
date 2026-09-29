@@ -1,0 +1,10 @@
+# Shell entrypoints and hash-validated controlled content must stay LF.
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+backend/requirements-linux.* text eol=lf
+deploy/linux/*.py text eol=lf
+data/question_bank_manifest.json text eol=lf
+data/builtin/legacy-expansion-v1/*.json text eol=lf
+data/builtin/legacy-expansion-v1/*.md text eol=lf

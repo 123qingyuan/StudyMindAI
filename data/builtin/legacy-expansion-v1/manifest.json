@@ -1,0 +1,112 @@
+{
+  "version": "legacy-expansion-v1",
+  "label": "[旧版扩展·含重复待整理]",
+  "source_script": "scripts\\expand_course_library.py",
+  "source_script_sha256": "5d3131db9fb716894da4df398f4dfb0d609071c0717ca8545a8dd8dae6f80149",
+  "seed_source": "scripts\\seed_multidisciplinary_library.py",
+  "seed_sha256": "316f126305c0886b40e049329e1dae8c35c63d1dbd409b290484c0a2b39b303b",
+  "dedup_method": "Normalize whitespace per nonempty line; strip numbered ## section prefixes; keep first occurrence. This is a mechanical upper bound, not validated useful curriculum length.",
+  "excluded": {
+    "计算机知识体系": "topup_all_knowledge_bases.py selected the latest user document, not a controlled computer source; never redistributed."
+  },
+  "items": [
+    {
+      "key": "legacy-01",
+      "domain": "数学与统计",
+      "file": "01.md",
+      "original_name": "[旧版扩展·含重复待整理] 数学与统计·旧版综合资料.md",
+      "old_name": "[内置课程扩展] 数学与统计·五万字综合资料.md",
+      "raw_sha256": "d173d595d4e0ede5f4e8cb37073303c634ecf8a1fe5dd33d34b5f8409bcb10f6",
+      "sha256": "d3713bd38ff3a49195379f12adb890471331296fcc2e0fb6e2a4c138866745e2",
+      "raw_chars": 109797,
+      "chars": 110044,
+      "deduplicated_chars": 1275,
+      "controlled_source_unique_chars": 680,
+      "summary": "[旧版扩展·含重复待整理] 原稿109797字符；机械去重1275字符，非有效五万字；仅本地关键词检索。"
+    },
+    {
+      "key": "legacy-02",
+      "domain": "物理与电子工程",
+      "file": "02.md",
+      "original_name": "[旧版扩展·含重复待整理] 物理与电子工程·旧版综合资料.md",
+      "old_name": "[内置课程扩展] 物理与电子工程·五万字综合资料.md",
+      "raw_sha256": "38a538fc4338041b5ae383fde10470fe635895a02a9a58a37f0218e372bab21e",
+      "sha256": "a56e9e6d1727009c3ed33c25a91634b8da9c9b41657924706ab4ae66e41b2eda",
+      "raw_chars": 107999,
+      "chars": 108246,
+      "deduplicated_chars": 1262,
+      "controlled_source_unique_chars": 656,
+      "summary": "[旧版扩展·含重复待整理] 原稿107999字符；机械去重1262字符，非有效五万字；仅本地关键词检索。"
+    },
+    {
+      "key": "legacy-03",
+      "domain": "经济与管理",
+      "file": "03.md",
+      "original_name": "[旧版扩展·含重复待整理] 经济与管理·旧版综合资料.md",
+      "old_name": "[内置课程扩展] 经济与管理·五万字综合资料.md",
+      "raw_sha256": "754a52d9322c38baed40ab0a70d0220dbe769042964a4cf6381a67e0cc126894",
+      "sha256": "d3ce689d2dd34d9bae1ac64d864a49258d22ad633ce0aadbcb7eb6fe0fa0f96e",
+      "raw_chars": 106917,
+      "chars": 107164,
+      "deduplicated_chars": 1248,
+      "controlled_source_unique_chars": 646,
+      "summary": "[旧版扩展·含重复待整理] 原稿106917字符；机械去重1248字符，非有效五万字；仅本地关键词检索。"
+    },
+    {
+      "key": "legacy-04",
+      "domain": "医学与生命科学",
+      "file": "04.md",
+      "original_name": "[旧版扩展·含重复待整理] 医学与生命科学·旧版综合资料.md",
+      "old_name": "[内置课程扩展] 医学与生命科学·五万字综合资料.md",
+      "raw_sha256": "2f267e28ecda4a1c7308c356722226881579ae22a2abbeeff6de1438f04df47f",
+      "sha256": "c7277e80c8935f764e8c70fedbf1f95f8601ebf67a3229a3c8b1705fb651704d",
+      "raw_chars": 102779,
+      "chars": 103026,
+      "deduplicated_chars": 1199,
+      "controlled_source_unique_chars": 602,
+      "summary": "[旧版扩展·含重复待整理] 原稿102779字符；机械去重1199字符，非有效五万字；仅本地关键词检索。"
+    },
+    {
+      "key": "legacy-05",
+      "domain": "法学与公共管理",
+      "file": "05.md",
+      "original_name": "[旧版扩展·含重复待整理] 法学与公共管理·旧版综合资料.md",
+      "old_name": "[内置课程扩展] 法学与公共管理·五万字综合资料.md",
+      "raw_sha256": "ef6f6b8676910558e72451e64a5e5ab5187619359457a107953ac06739c959f4",
+      "sha256": "0ba5caf3d011b1517a5f03aaf981b498aeb0bbc0d47b8d1d6c13c6d55dfd8a1e",
+      "raw_chars": 105479,
+      "chars": 105726,
+      "deduplicated_chars": 1219,
+      "controlled_source_unique_chars": 634,
+      "summary": "[旧版扩展·含重复待整理] 原稿105479字符；机械去重1219字符，非有效五万字；仅本地关键词检索。"
+    },
+    {
+      "key": "legacy-06",
+      "domain": "语言与人文",
+      "file": "06.md",
+      "original_name": "[旧版扩展·含重复待整理] 语言与人文·旧版综合资料.md",
+      "old_name": "[内置课程扩展] 语言与人文·五万字综合资料.md",
+      "raw_sha256": "299a680a35033f4d9cbd7ba1194c24b6159283076f4f2ea71a0d8b2e25c1eac2",
+      "sha256": "b80efa50d8affc33291c8f1369e2d105790074ce6407a2b5b04ba61a54889270",
+      "raw_chars": 104937,
+      "chars": 105184,
+      "deduplicated_chars": 1231,
+      "controlled_source_unique_chars": 622,
+      "summary": "[旧版扩展·含重复待整理] 原稿104937字符；机械去重1231字符，非有效五万字；仅本地关键词检索。"
+    },
+    {
+      "key": "legacy-07",
+      "domain": "教育与心理",
+      "file": "07.md",
+      "original_name": "[旧版扩展·含重复待整理] 教育与心理·旧版综合资料.md",
+      "old_name": "[内置课程扩展] 教育与心理·五万字综合资料.md",
+      "raw_sha256": "2ce58be396ff14896a7c4ba389fe9cc17e62bd5626ac8975e36649f0fbdaaef6",
+      "sha256": "2abf459e4f1cc4eb554504636b734da9fe642a24e321d80f61e0a4f1ec60c5e0",
+      "raw_chars": 102597,
+      "chars": 102844,
+      "deduplicated_chars": 1185,
+      "controlled_source_unique_chars": 602,
+      "summary": "[旧版扩展·含重复待整理] 原稿102597字符；机械去重1185字符，非有效五万字；仅本地关键词检索。"
+    }
+  ]
+}

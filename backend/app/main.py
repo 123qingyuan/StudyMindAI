@@ -62,7 +62,9 @@ async def internal_error(request,exc):
 @app.get('/api/health')
 def health():
     with core.db() as conn: conn.execute('SELECT 1 AS ok').fetchone()
-    return {'status':'ok','database':core._database.engine.dialect.name,'version':app.version,'storage':'local','ocr':'rapidocr-onnx','embedding':'BAAI/bge-small-zh-v1.5','vector_store':'Qdrant-local'}
+    import os
+    keyword = os.getenv('EMBEDDING_MODE', 'local') == 'keyword'
+    return {'status':'ok','database':core._database.engine.dialect.name,'version':app.version,'storage':'local','ocr':'rapidocr-onnx','embedding':'keyword' if keyword else os.getenv('LOCAL_EMBEDDING_MODEL', 'BAAI/bge-small-zh-v1.5'),'vector_store':'disabled' if keyword else 'Qdrant-local'}
 
 app.include_router(core.router)
 app.include_router(learning_router)
