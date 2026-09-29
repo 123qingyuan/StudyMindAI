@@ -24,7 +24,7 @@ async def lifespan(app):
     from .rag.store import close_clients
     close_clients()
 
-app=FastAPI(title='StudyMind · 个人学习空间',version='1.1.0',lifespan=lifespan)
+app=FastAPI(title='StudyMind · 个人学习空间',version='2.0.0',lifespan=lifespan)
 app.add_middleware(CORSMiddleware,allow_origins=['http://localhost:5173','http://127.0.0.1:5173','http://localhost:8765','http://127.0.0.1:8765'],allow_credentials=False,allow_methods=['GET','POST','PUT','PATCH','DELETE','OPTIONS'],allow_headers=['Authorization','Content-Type'])
 
 @app.middleware('http')

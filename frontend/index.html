@@ -3,9 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%234841cc%27/%3E%3Cpath d=%27M16 5l3 8 8 3-8 3-3 8-3-8-8-3 8-3z%27 fill=%27white%27/%3E%3C/svg%3E" />
+    <link rel="icon" href="/studymind-app-icon.svg" />
     <meta name="theme-color" content="#f6f7fb" />
-    <title>StudyMind AI · 智学助手</title>
+    <title>StudyMind AI 2.0 · 智学助手</title>
+    <script>
+      (() => { let mode = 'system'; try { mode = localStorage.getItem('studymind.theme') || 'system' } catch {} const dark = mode === 'dark' || (mode !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches); document.documentElement.classList.toggle('dark', dark); document.documentElement.dataset.theme = dark ? 'dark' : 'light'; document.documentElement.style.colorScheme = dark ? 'dark' : 'light' })()
+    </script>
+    <style>html{background:#f3f5f8}html.dark{background:#10151f}</style>
   </head>
   <body>
     <div id="app"></div>

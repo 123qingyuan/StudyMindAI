@@ -13,6 +13,10 @@ from .agent.question_bank import router as question_router
 router=APIRouter(prefix='/api')
 router.include_router(document_router)
 router.include_router(question_router)
+from .ai.service import router as settings_router
+from .ai.chat import router as chat_router
+router.include_router(settings_router)
+router.include_router(chat_router)
 
 class ReportIn(StrictModel):
     period: Literal['daily','weekly']='weekly'

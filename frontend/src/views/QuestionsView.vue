@@ -51,21 +51,21 @@ onMounted(()=>run(refresh))
 .library-banner { display:flex; align-items:center; gap:20px; padding:26px 28px; background:var(--surface); border:1px solid var(--line-strong); }
 .library-banner .generator-icon { width:54px; height:54px; border-radius:16px; }
 .library-copy { flex:1; min-width:0; }
-.library-copy h2 { margin:8px 0; color:#292b45; font-size:21px; line-height:1.4; }
-.library-copy p { margin:0; max-width:680px; color:#586176; font-size:14px; line-height:1.8; overflow-wrap:anywhere; }
-.library-link { display:inline-flex; align-items:center; justify-content:center; gap:9px; flex:none; min-height:44px; padding:10px 17px; color:#5140a0; background:#fff; border:1px solid #d9d3ef; white-space:nowrap; font-size:14px; }
-.practice-toolbar { display:grid; grid-template-columns:minmax(0,1fr) 160px; align-items:start; gap:24px; margin:20px 0; padding:22px 24px; background:#fff; border:1px solid #e1e5ef; border-radius:16px; }
+.library-copy h2 { margin:8px 0; color: var(--ink); font-size:21px; line-height:1.4; }
+.library-copy p { margin:0; max-width:680px; color: var(--ink-soft); font-size:14px; line-height:1.8; overflow-wrap:anywhere; }
+.library-link { display:inline-flex; align-items:center; justify-content:center; gap:9px; flex:none; min-height:44px; padding:10px 17px; color: var(--ink-soft); background: var(--surface-soft); border: 1px solid var(--line-strong); white-space:nowrap; font-size:14px; }
+.practice-toolbar { display:grid; grid-template-columns:minmax(0,1fr) 160px; align-items:start; gap:24px; margin:20px 0; padding:22px 24px; background: var(--surface-soft); border: 1px solid var(--line-strong); border-radius:16px; }
 .subject-filter { min-width:0; }
 .filter-heading { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
-.filter-heading h2,.status-filter label { margin:0; color:#30364b; font-size:14px; font-weight:700; line-height:1.5; }
-.filter-heading span,.filter-result { color:#626b7e; font-size:12px; line-height:1.6; }
+.filter-heading h2,.status-filter label { margin:0; color: var(--ink); font-size:14px; font-weight:700; line-height:1.5; }
+.filter-heading span,.filter-result { color: var(--ink-soft); font-size:12px; line-height:1.6; }
 .practice-toolbar .filter-pills { display:flex; flex-wrap:wrap; gap:9px; margin:0; }
-.filter-pills button { min-height:40px; max-width:100%; padding:8px 14px; border:1px solid #dce1ec; border-radius:9px; background:#f6f8fc; color:#46516a; font-size:14px; font-weight:500; line-height:1.5; overflow-wrap:anywhere; cursor:pointer; transition:background .15s,border-color .15s; }
-.filter-pills button:hover { color:#4b3a97; background:#f0ecff; border-color:#b8abdf; box-shadow:none; }
+.filter-pills button { min-height:40px; max-width:100%; padding:8px 14px; border: 1px solid var(--line-strong); border-radius:9px; background: var(--surface-soft); color: var(--ink); font-size:14px; font-weight:500; line-height:1.5; overflow-wrap:anywhere; cursor:pointer; transition:background .15s,border-color .15s; }
+.filter-pills button:hover { color: var(--ink); background: var(--surface-soft); border-color: var(--line-strong); box-shadow:none; }
 .filter-pills button.active { color:var(--primary-dark); background:var(--primary-soft); border-color:var(--primary); box-shadow:none; font-weight:700; }
-.filter-pills button:focus-visible,.compact-select:focus-visible,.library-link:focus-visible { outline:3px solid #9784d7; outline-offset:3px; }
-.status-filter { display:flex; flex-direction:column; gap:12px; min-width:0; padding-left:22px; border-left:1px solid #e6e9f1; }
-.status-filter .compact-select { width:100%; min-height:42px; padding:8px 12px; border:1px solid #d4dae7; border-radius:9px; color:#39445b; background:#fff; font-size:14px; }
+.filter-pills button:focus-visible,.compact-select:focus-visible,.library-link:focus-visible { outline: 3px solid var(--line-strong); outline-offset:3px; }
+.status-filter { display:flex; flex-direction:column; gap:12px; min-width:0; padding-left:22px; border-left: 1px solid var(--line-strong); }
+.status-filter .compact-select { width:100%; min-height:42px; padding:8px 12px; border: 1px solid var(--line-strong); border-radius:9px; color: var(--ink); background: var(--surface-soft); font-size:14px; }
 @media (max-width:700px) {
   .library-banner { flex-direction:column; align-items:flex-start; gap:15px; padding:22px 20px; }
   .library-copy h2 { font-size:20px; }
@@ -73,7 +73,7 @@ onMounted(()=>run(refresh))
   .practice-toolbar { grid-template-columns:minmax(0,1fr); gap:20px; padding:20px 16px; }
   .practice-toolbar .filter-pills { gap:8px; }
   .filter-pills button { min-height:44px; padding:9px 12px; }
-  .status-filter { padding:17px 0 0; border-left:0; border-top:1px solid #e6e9f1; }
+  .status-filter { padding:17px 0 0; border-left:0; border-top: 1px solid var(--line-strong); }
   .status-filter .compact-select { min-height:44px; }
 }
 </style>

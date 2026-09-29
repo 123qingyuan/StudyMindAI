@@ -1,6 +1,6 @@
 /* Shared workspace primitives; scoped away from the preserved auth page. */
 .app-shell { font-size: var(--text-body); line-height: 1.6; }
-.app-shell ::selection { color: var(--primary-dark); background: #dfdcff; }
+.app-shell ::selection { color: var(--primary-dark); background: var(--primary-soft); }
 .app-shell input, .app-shell textarea { caret-color: var(--primary-dark); }
 .app-shell a { text-underline-offset: 3px; }
 .app-shell :focus-visible { outline: 2px solid var(--primary-dark); outline-offset: 3px; }

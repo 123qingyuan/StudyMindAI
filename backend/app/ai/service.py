@@ -137,6 +137,13 @@ async def settings_put(payload: SettingsIn, user=Depends(core.current_user)):
     return public_config(user['id'])
 
 
+@router.post('/settings/ai/test')
+async def settings_test(user=Depends(core.current_user)):
+    # Real provider request; fixed non-sensitive greeting, upstream details never returned.
+    await complete_for(user['id'], 'connection_test', [{'role': 'user', 'content': '请只回复：连接测试成功'}], max_tokens=32)
+    return {'ok': True, 'message': '真实模型请求成功'}
+
+
 @router.delete('/settings/ai')
 def settings_delete(user=Depends(core.current_user)):
     with connection() as conn:

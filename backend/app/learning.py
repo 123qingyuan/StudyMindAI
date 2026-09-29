@@ -279,8 +279,9 @@ def summary(user=Depends(current_user)):
     with db() as conn:
         docs=conn.execute('SELECT COUNT(*) AS n FROM documents WHERE user_id=?',(user['id'],)).fetchone()['n']
         convs=conn.execute('SELECT COUNT(*) AS n FROM conversations WHERE user_id=?',(user['id'],)).fetchone()['n']
+        question_count=conn.execute("SELECT COUNT(*) AS n FROM questions WHERE user_id=? AND stem NOT LIKE '【内置日练%'",(user['id'],)).fetchone()['n']
         exam=conn.execute('SELECT * FROM exams WHERE user_id=? AND exam_date>=? ORDER BY exam_date LIMIT 1',(user['id'],current.isoformat())).fetchone()
-    return {'today':current.isoformat(),'study_minutes':sum(r['minutes'] for r in all_records if in_local_day(r['studied_at'],user)==current),'total_minutes':sum(r['minutes'] for r in all_records),'task_total':len(all_tasks),'task_done':done,'task_rate':round(done/len(all_tasks)*100) if all_tasks else 0,'documents':docs,'conversations':convs,'next_exam':exam,'subjects':[{'subject':k,'minutes':v} for k,v in sorted(subjects.items(),key=lambda x:-x[1])],'period':'all_time'}
+    return {'today':current.isoformat(),'study_minutes':sum(r['minutes'] for r in all_records if in_local_day(r['studied_at'],user)==current),'total_minutes':sum(r['minutes'] for r in all_records),'task_total':len(all_tasks),'task_done':done,'task_rate':round(done/len(all_tasks)*100) if all_tasks else 0,'documents':docs,'questions':question_count,'conversations':convs,'next_exam':exam,'subjects':[{'subject':k,'minutes':v} for k,v in sorted(subjects.items(),key=lambda x:-x[1])],'period':'all_time'}
 @router.get('/dashboard/today')
 def today_view(user=Depends(current_user)):
     today=local_now(user).date(); iso=today.isoformat()

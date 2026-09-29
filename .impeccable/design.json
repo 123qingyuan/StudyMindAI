@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-28T18:58:13.417564+00:00",
+  "title": "Design System: StudyMind 2.0",
+  "extensions": {
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "640px"
+      },
+      {
+        "name": "sidebar",
+        "value": "860px"
+      }
+    ],
+    "shadows": [
+      {
+        "name": "floating",
+        "value": "0 18px 48px rgba(15,21,34,.18)",
+        "purpose": "dialogs and popovers"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary",
+      "kind": "button",
+      "html": "<button class=\"ds-primary\">保存设置</button>",
+      "css": ".ds-primary{background:var(--action);color:var(--on-action);border:0;border-radius:8px;padding:8px 14px;min-height:40px}.ds-primary:hover{filter:brightness(.94)}.ds-primary:focus-visible{outline:2px solid var(--primary);outline-offset:3px}"
+    },
+    {
+      "name": "Secondary",
+      "kind": "button",
+      "html": "<button class=\"ds-secondary\">重新读取</button>",
+      "css": ".ds-secondary{background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);border-radius:8px;padding:8px 14px;min-height:40px}.ds-secondary:hover{background:var(--primary-soft)}.ds-secondary:focus-visible{outline:2px solid var(--primary)}"
+    },
+    {
+      "name": "Input",
+      "kind": "input",
+      "html": "<input class=\"ds-input\" aria-label=\"任务名称\" placeholder=\"任务名称\">",
+      "css": ".ds-input{background:var(--surface-soft);color:var(--ink);border:1px solid var(--line-strong);border-radius:7px;padding:9px 11px}.ds-input:focus-visible{outline:2px solid var(--primary)}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "html": "<a class=\"ds-nav\" href=\"#\">学习总览</a>",
+      "css": ".ds-nav{display:block;padding:12px;color:var(--primary-dark);background:var(--primary-soft);border-radius:9px}.ds-nav:hover{background:var(--surface-soft)}.ds-nav:focus-visible{outline:2px solid var(--primary)}"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "html": "<section class=\"ds-panel\">学习的节奏</section>",
+      "css": ".ds-panel{background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);border-radius:12px;padding:20px}"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "html": "<span class=\"ds-tag\">来源资料</span>",
+      "css": ".ds-tag{display:inline-flex;padding:4px 8px;background:var(--surface-soft);color:var(--ink-soft);border-radius:5px;font-size:12px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "学习工作台",
+    "overview": "以真实记录和阅读内容为中心。",
+    "keyCharacteristics": [
+      "语义主题",
+      "紧凑侧栏",
+      "真实统计"
+    ]
+  }
+}

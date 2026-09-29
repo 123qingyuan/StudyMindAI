@@ -5,6 +5,7 @@ export const routes = [
   { path: '/login', component: () => import('../views/AuthView.vue'), meta: { title: '账户登录', public: true } },
   { path: '/dashboard', component: () => import('../views/DashboardView.vue'), meta: { title: '学习总览' } },
 
+  { path: '/chat', component: () => import('../views/ChatView.vue'), meta: { title: 'AI 学习助手' } },
   { path: '/learning', component: () => import('../views/LearningView.vue'), meta: { title: '我的学习' } },
   { path: '/plans', component: () => import('../views/PlansView.vue'), meta: { title: '学习计划' } },
   { path: '/documents', component: () => import('../views/DocumentsView.vue'), meta: { title: '资料管理' } },

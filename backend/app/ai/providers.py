@@ -95,11 +95,28 @@ def endpoint(base, suffix):
     return base + suffix
 
 
+def check_status(response):
+    status = response.status_code
+    if status < 300:
+        return
+    categories = {
+        400: ('AI_INVALID_REQUEST', '模型服务拒绝请求，请核对精确模型 ID、接口协议及参数'),
+        401: ('AI_AUTH_REJECTED', '模型服务拒绝认证，请检查该地址对应的密钥'),
+        402: ('AI_BILLING_REQUIRED', '模型服务要求付费或余额不足，请到供应商控制台检查账单'),
+        403: ('AI_AUTH_REJECTED', '模型服务拒绝访问，请检查账户与模型权限'),
+        404: ('AI_ENDPOINT_NOT_FOUND', '模型接口或模型不存在，请核对基础地址及精确模型 ID'),
+        408: ('AI_UPSTREAM_TIMEOUT', '模型服务请求超时，请稍后重试'),
+        422: ('AI_INVALID_PARAMETERS', '模型服务无法处理参数，请核对模型 ID、接口协议及参数支持'),
+        429: ('AI_RATE_LIMITED', '模型服务限制请求，请检查速率与配额后重试'),
+    }
+    code, message = categories.get(status, ('AI_UPSTREAM_HTTP_ERROR',
+        '模型上游服务异常，请稍后重试' if status >= 500 else '模型接口返回意外状态，请检查供应商接口文档'))
+    # Only the numeric status and constant guidance leave this boundary, never upstream bodies.
+    raise ProviderError(code, f'{message}（上游 HTTP {status}）', 429 if status == 429 else 502)
+
+
 async def read_json(response):
-    if response.status_code >= 400:
-        if response.status_code == 429:
-            raise ProviderError('AI_RATE_LIMITED', '模型服务请求频率受限，请稍后重试', 429)
-        raise ProviderError()
+    check_status(response)
     data = bytearray()
     async for chunk in response.aiter_bytes():
         data.extend(chunk)
@@ -150,8 +167,7 @@ class OpenAICompatible:
         try:
             async with httpx.AsyncClient(timeout=TIMEOUT, follow_redirects=False, trust_env=False) as client:
                 async with client.stream('POST', url, headers=self.headers(), json=payload) as response:
-                    if response.status_code >= 400:
-                        raise ProviderError(status=429 if response.status_code == 429 else 502)
+                    check_status(response)
                     async for line in response.aiter_lines():
                         received += len(line.encode('utf-8'))
                         if received > MAX_RESPONSE_BYTES:
@@ -232,8 +248,7 @@ class GeminiNative:
         try:
             async with httpx.AsyncClient(timeout=TIMEOUT, follow_redirects=False, trust_env=False) as client:
                 async with client.stream('POST', url, headers={'x-goog-api-key': self.config.api_key}, json=payload) as response:
-                    if response.status_code >= 400:
-                        raise ProviderError()
+                    check_status(response)
                     async for line in response.aiter_lines():
                         size += len(line.encode('utf-8'))
                         if size > MAX_RESPONSE_BYTES:

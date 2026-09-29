@@ -11,7 +11,8 @@ import time
 import urllib.request
 
 APP_NAME = "StudyMindAI"
-URL = "http://127.0.0.1:8765"
+PORT = int(os.getenv("STUDYMIND_PORT", "8765"))
+URL = f"http://127.0.0.1:{PORT}"
 
 
 def bundle_root() -> Path:
@@ -20,7 +21,7 @@ def bundle_root() -> Path:
 
 def configure() -> Path:
     root = bundle_root()
-    app_dir = Path(os.getenv("LOCALAPPDATA", Path.home())) / APP_NAME
+    app_dir = Path(os.getenv("STUDYMIND_APP_DIR") or (Path(os.getenv("LOCALAPPDATA", Path.home())) / APP_NAME))
     data = app_dir / "data"
     data.mkdir(parents=True, exist_ok=True)
     os.environ.setdefault("STUDYMIND_BUNDLE_ROOT", str(root))
@@ -66,8 +67,8 @@ def main() -> int:
     global server_thread
     app_dir = configure()
     data = app_dir / "data"
-    if listening(8765) and not ready():
-        raise SystemExit("端口 8765 已被其他程序占用。")
+    if listening(PORT):
+        raise SystemExit(f"端口 {PORT} 已被其他程序占用；不会连接到旧服务。")
 
     import uvicorn
     from app.main import app
@@ -75,7 +76,7 @@ def main() -> int:
     log_stream = (data / "app.log").open("a", encoding="utf-8", buffering=1)
     sys.stdout = log_stream
     sys.stderr = log_stream
-    config = uvicorn.Config(app, host="127.0.0.1", port=8765, workers=1, log_level="info")
+    config = uvicorn.Config(app, host="127.0.0.1", port=PORT, workers=1, log_level="info")
     server = uvicorn.Server(config)
     server_thread = threading.Thread(target=run_server, args=(server,), name="StudyMindServer", daemon=True)
     server_thread.start()

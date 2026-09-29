@@ -6,6 +6,8 @@ import 'element-plus/es/components/message/style/css'
 import 'katex/dist/katex.min.css'
 import App from './App.vue'
 import router from './router'
+import './tokens.css'
+import './composables/useTheme'
 import './style.css'
 import './workspace.css'
 

@@ -19,8 +19,8 @@ def env(tmp_path,monkeypatch):
 
 def test_removed_generation_routes(env):
     c,a,_=env
-    assert c.post('/api/conversations',headers=a,json={}).status_code==404
-    assert c.get('/api/settings/ai',headers=a).status_code==404
+    assert c.post('/api/conversations',headers=a,json={}).status_code==200
+    assert c.get('/api/settings/ai',headers=a).status_code==200
     assert c.post('/api/questions/generate',headers=a,json={'subject':'Python','type':'单选题','difficulty':'简单','count':5}).status_code in {404,405}
     assert c.post('/api/study-plans/generate',headers=a,json={'title':'x','goal':'x','start_date':'2026-10-01','end_date':'2026-10-02','daily_minutes':30}).status_code in {404,405}
     assert c.post('/api/agent/tasks',headers=a,json={'goal':'x'}).status_code==404

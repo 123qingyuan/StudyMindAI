@@ -1,0 +1,52 @@
+/* StudyMind 2.0 — semantic colors, shared by native controls and teleports. */
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI Variable", "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+  font-synthesis: none; text-rendering: optimizeLegibility;
+  --ink: #202632; --ink-soft: #475569; --muted: #626d80;
+  --canvas: #f3f5f8; --surface: #ffffff; --surface-soft: #edf0f5;
+  --line: #dfe4ec; --line-strong: #ccd4e0;
+  --primary: #5558c9; --primary-dark: #4547b2; --primary-soft: #eaeafa;
+  --action: #4d50bb; --on-action: #ffffff;
+  --blue: #285fa7; --blue-soft: #e8f0fc; --green: #237352; --green-soft: #e7f3ed;
+  --amber: #865b16; --amber-soft: #fbf0dc; --red: #aa354d; --red-soft: #fbe9ed;
+  --code-bg: #eef1f6; --code-ink: #303d52; --code-keyword: #663ca4; --code-string: #236749;
+  --sidebar: #e9edf4; --chrome: #f8f9fc; --overlay: rgba(15, 21, 34, .48);
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px;
+  --radius-panel: 12px; --text-body: 14px; --text-meta: 12px; --text-title: 28px;
+  --shadow-sm: 0 2px 6px rgba(20, 31, 52, .035); --shadow: 0 18px 48px rgba(15, 21, 34, .18);
+}
+:root.dark {
+  color-scheme: dark;
+  --ink: #e7ebf2; --ink-soft: #bec7d6; --muted: #9ba8bb;
+  --canvas: #10151f; --surface: #191f2b; --surface-soft: #222b3a;
+  --line: #2c3748; --line-strong: #3b475a;
+  --primary: #acb0ff; --primary-dark: #bbbeff; --primary-soft: #2c2e4c;
+  --action: #6669d8; --on-action: #ffffff;
+  --blue: #94bcff; --blue-soft: #22334b; --green: #83d4ac; --green-soft: #203a32;
+  --amber: #e4bd74; --amber-soft: #3c3222; --red: #ffa2b4; --red-soft: #3f2833;
+  --code-bg: #121923; --code-ink: #d6e0ef; --code-keyword: #c8adff; --code-string: #99d6b3;
+  --sidebar: #141a25; --chrome: #161d28; --overlay: rgba(0, 0, 0, .65);
+  --shadow-sm: 0 2px 6px rgba(0,0,0,.12); --shadow: 0 18px 48px rgba(0,0,0,.38);
+}
+:root {
+  --el-bg-color: var(--surface); --el-bg-color-page: var(--canvas); --el-bg-color-overlay: var(--surface);
+  --el-text-color-primary: var(--ink); --el-text-color-regular: var(--ink-soft); --el-text-color-secondary: var(--muted); --el-text-color-placeholder: var(--muted);
+  --el-border-color: var(--line-strong); --el-border-color-light: var(--line); --el-border-color-lighter: var(--line);
+  --el-fill-color: var(--surface-soft); --el-fill-color-light: var(--surface-soft); --el-fill-color-blank: var(--surface);
+  --el-color-primary: var(--primary); --el-color-primary-light-9: var(--primary-soft);
+  --el-color-success: var(--green); --el-color-success-light-9: var(--green-soft); --el-color-success-light-8: var(--line);
+  --el-color-warning: var(--amber); --el-color-warning-light-9: var(--amber-soft); --el-color-warning-light-8: var(--line);
+  --el-color-danger: var(--red); --el-color-danger-light-9: var(--red-soft); --el-color-danger-light-8: var(--line);
+  --el-color-error: var(--red); --el-color-error-light-9: var(--red-soft); --el-color-error-light-8: var(--line);
+  --el-color-info: var(--muted); --el-color-info-light-9: var(--surface-soft); --el-color-info-light-8: var(--line);
+  --el-mask-color: var(--overlay); --el-box-shadow: var(--shadow);
+}
+::selection { color: var(--ink); background: var(--primary-soft); }
+* { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+input, textarea { caret-color: var(--primary); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (prefers-contrast: more) { :root { --line: var(--muted); --line-strong: var(--muted); } }
