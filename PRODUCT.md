@@ -8,4 +8,5 @@
 - AI 出题、AI 计划生成、主观题模型评阅未开放。内置资料明确标注来源；每日练习是已有题池轮换，不是每日新增。
 - 默认 SQLite + 关键词检索。用户数据位于本机用户目录；包内不带 .env、账户数据库或密钥。
 - 使用场景：白天课堂与夜间宿舍交替；浅色、深色、跟随系统，优先清晰、紧凑与长期阅读。
-- 2.0 为本地构建交付，未提交、未发布；历史 GitHub 版本不等于当前包。
+- Windows 2.0.0 已发布至 [GitHub Release](https://github.com/123qingyuan/StudyMindAI/releases/tag/v2.0.0)。新增 Linux Docker Compose 部署位于 main，使用独立数据卷与 Python 3.12；不是 Linux 桌面包，也不自动迁移 Windows 数据，见 [Linux 文档](docs/LINUX.md)。
+- Agent 自动执行、知识图谱、Learning Twin 不属于当前已交付承诺；个人中转站尚未验证成功，AI 配置保存不代表模型可用。

@@ -1,370 +1,156 @@
 <div align="center">
   <img src="logo/studymind-logo-horizontal.svg" width="430" alt="StudyMind AI 标志">
-
-  <p><strong>面向大学生的本地优先 AI 学习与效率助手</strong></p>
-  <p>把任务、课程、资料、知识库、练习题、学习记录和 AI 助手放进一个真正可运行的学习空间。</p>
-
+  <p><strong>面向大学生日常学习的本地优先学习空间</strong></p>
+  <p>任务、课程、资料、知识库、练习与学习记录集中管理；AI 是可选辅助，不是离线学习的前提。</p>
   <p>
-    <a href="https://github.com/123qingyuan/StudyMindAI/releases/latest"><img alt="最新版本" src="https://img.shields.io/github/v/release/123qingyuan/StudyMindAI?display_name=tag&sort=semver&style=flat-square"></a>
-    <a href="https://github.com/123qingyuan/StudyMindAI/releases/download/v2.0.0/StudyMindAI.exe"><img alt="Windows 下载" src="https://img.shields.io/badge/Windows-下载_EXE-5b5bd6?style=flat-square&logo=windows11&logoColor=white"></a>
-    <img alt="Python" src="https://img.shields.io/badge/Python-3.13-3776AB?style=flat-square&logo=python&logoColor=white">
-    <img alt="Vue" src="https://img.shields.io/badge/Vue-3-42b883?style=flat-square&logo=vuedotjs&logoColor=white">
-    <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.141-009688?style=flat-square&logo=fastapi&logoColor=white">
-  </p>
-
-  <p>
-    <a href="#快速开始">快速开始</a> ·
-    <a href="#界面预览">界面预览</a> ·
-    <a href="#核心能力">核心能力</a> ·
-    <a href="#源码运行">源码运行</a> ·
-    <a href="#配置-ai">配置 AI</a> ·
-    <a href="#验证与测试">验证与测试</a>
+    <a href="https://github.com/123qingyuan/StudyMindAI/releases/tag/v2.0.0">Windows 桌面版 v2.0.0</a> ·
+    <a href="#linux-一键部署">Linux 一键部署</a> ·
+    <a href="#功能与边界">功能与边界</a> ·
+    <a href="docs/LINUX.md">部署与备份文档</a>
   </p>
 </div>
 
-> [!NOTE]
-> Windows 桌面版是独立应用窗口，不会跳转外部浏览器。前端、后端、OCR 组件和内置学习资料已打包进 EXE；干净电脑无需另外安装 Python、Node.js、MySQL 或 Qdrant。
+## 选择使用方式
 
-<p align="center">
-  <img src="docs/images/login.png" width="100%" alt="StudyMind AI 登录页面">
-</p>
+| | Windows 2.0 桌面版 | Linux Docker 部署（main） |
+|---|---|---|
+| 入口 | 下载 EXE，双击打开独立应用窗口 | 克隆仓库后执行 `bash deploy.sh`，通过浏览器访问 |
+| 适用场景 | 个人电脑日常学习 | 自建 Linux 主机上的个人学习空间 |
+| 前提 | Windows 10/11、Microsoft Edge WebView2 Runtime | Linux x86_64/amd64、Git、Bash、Docker Engine、Compose v2 |
+| 默认存储与检索 | SQLite + 关键词检索 | SQLite + 关键词检索、单 worker |
+| 数据位置 | `%LOCALAPPDATA%\StudyMindAI\data` | Compose `app-data` 命名卷，容器内 `/var/lib/studymind` |
+| 交付边界 | 已发布的 `v2.0.0` EXE | 新增于 `main` 的部署脚本；不是 Linux 桌面安装包，也不包含在旧发布标签中 |
 
-## 为什么做 StudyMind
+两种方式使用各自的数据目录，**不会自动同步或迁移 Windows/MySQL 数据**。默认只监听本机回环地址，不直接向公网开放。
 
-学习工具常把计划、资料、练习和统计拆成几个互不相干的入口。StudyMind 把它们串成一条可追踪的学习闭环：
+## Windows 2.0 桌面版
 
-```text
-设定目标 → 拆解任务 → 学习与记录 → 整理资料 → 检索知识 → 练习检验 → 复盘数据
-                              ↑                                   │
-                              └──────── AI 辅助与来源引用 ────────┘
+**[下载 StudyMindAI.exe](https://github.com/123qingyuan/StudyMindAI/releases/download/v2.0.0/StudyMindAI.exe)** · [发布说明与 SHA256 校验文件](https://github.com/123qingyuan/StudyMindAI/releases/tag/v2.0.0)
+
+1. 下载并运行 `StudyMindAI.exe`，在独立的 **StudyMind AI · 智学助手** 窗口中注册或登录。
+2. 前端、后端、OCR 与受控内置学习资料随 EXE 打包，无需另装 Python、Node.js、MySQL 或 Qdrant。
+3. 若窗口无法打开，检查 WebView2 Runtime；日志位于 `%LOCALAPPDATA%\StudyMindAI\data\app.log`。
+
+2.0 提供**浅色、深色、跟随系统**三种外观，保留任务、课程、考试、资料与练习的真实数据流。主题升级不代表完整 Learning OS 路线图已经实现。
+
+### 2.0 界面预览
+
+以下为仓库已有的 2.0 深色工作台验收截图；展示的是演示空间和验收记录，不代表新账户的默认学习成果，也不是 Linux 部署成功的证据。历史版本截图不再作为当前首页展示。
+
+![StudyMind 2.0 深色学习总览](docs/images/dashboard-v2-dark.png)
+
+## Linux 一键部署
+
+### 前提
+
+- Linux **x86_64/amd64**；建议至少 2 核、4 GB RAM，并预留镜像及上传文件空间。ARM64 暂不承诺支持。
+- 已安装 Git、Bash，以及 [Docker Engine](https://docs.docker.com/engine/install/) 和 **Compose v2**；Compose 必须支持 `up --wait --wait-timeout`。
+- 当前用户能运行 `docker info`；不要将 Docker socket 权限改为 `666`。Docker 组权限近似 root。
+- 首次构建需要联网下载基础镜像和依赖。宿主机不必另装 Python 或 Node.js；镜像使用 **Python 3.12**，不是 Windows 开发环境的 3.13。
+
+在准备好的 Linux 主机执行：
+
+```bash
+git clone https://github.com/123qingyuan/StudyMindAI.git
+cd StudyMindAI
+bash deploy.sh
 ```
 
-项目坚持三条边界：
+部署成功后，在**该主机**访问 <http://127.0.0.1:8765> 并自行注册，没有默认账户或密码。必须保留完整仓库中的受控 `data/builtin/` 和题库清单，不要只复制脚本。
 
-- **真实数据流**：任务、时长、文档、题目和报告来自真实后端记录，不用静态卡片冒充完成结果。
-- **本地优先**：桌面数据默认保存在用户电脑；没有 AI 配置时，任务、资料、OCR、笔记和手工题库仍可使用。
-- **AI 不装神**：模型不可用时明确报错；知识库问答保留来源，证据不足时不把固定文本伪装成模型回答。
+脚本检测 Docker/Compose、仅在不存在时创建 `.env.linux`、构建镜像、等待健康检查并请求首页；构建失败不会先停止现有服务。它不自动安装 Docker、不修改防火墙、不覆盖已有 `.env`/`.env.linux`、不删除数据卷。
 
-## 本地 2.0.0
+### 远程访问与维护
 
-本次交付文件：`dist/v2.0.0/StudyMindAI.exe`，已发布至 [v2.0.0](https://github.com/123qingyuan/StudyMindAI/releases/tag/v2.0.0)。新增深色 / 浅色 / 跟随系统三模式，登录、全路由与弹窗共享语义主题。见 [设计系统](DESIGN.md)、[产品边界](PRODUCT.md) 和 [更新记录](CHANGELOG.md)。完整 Learning OS 路线图尚未全部实现。
+默认地址是**服务器本机地址**，不是你的客户端地址。私人远程访问可在客户端建立 SSH 隧道，再打开客户端的 `http://127.0.0.1:8765`：
 
-![2.0 深色工作台](docs/images/dashboard-v2-dark.png)
+```bash
+ssh -L 8765:127.0.0.1:8765 your-user@your-server
+```
 
-## 快速开始
+正式远程访问请配置 HTTPS 反向代理及访问控制；不要直接将 8765 暴露到公网。注册入口没有邀请审批，公网部署还需考虑注册滥用、限流和存储配额。
 
-### Linux 服务器：Docker Compose 一键部署
+项目根目录下查看状态和日志：
 
-完整源码目录中运行 `bash deploy.sh`，默认仅本机 `http://127.0.0.1:8765`，SQLite + 关键词检索 + 单 worker，用户数据和加密密钥保存在命名卷。需预先安装 Docker Engine/Compose v2；不修改 Windows EXE、已有 `.env` 或用户数据。
+```bash
+docker compose --env-file .env.linux ps
+docker compose --env-file .env.linux logs --tail=100 app
+```
 
-详细说明：[Linux 部署、HTTPS 反代、升级和备份](docs/LINUX.md)。本次开发机无 Docker/WSL Linux，**尚未完成 Linux 实跑验收**；已提供 Ubuntu 集成测试 workflow，待执行验证，不把 Windows 测试等同于 Linux 部署成功。
+**升级前先做完整备份**，记录 Git revision 和镜像 ID；确认工作区干净并审阅更新后执行：
 
-### 方案一：直接下载 Windows 桌面版
+```bash
+git pull --ff-only
+bash deploy.sh
+```
 
-1. 从 [最新版发布页](https://github.com/123qingyuan/StudyMindAI/releases/latest) 下载 `StudyMindAI.exe`。
-2. 双击运行，在独立的 **StudyMind AI · 智学助手** 窗口中注册或登录。
-3. 用户数据保存在 `%LOCALAPPDATA%\StudyMindAI\data`。
+命名卷保存 SQLite、上传文件、JWT 密钥和 AI 配置加密密钥；重建容器不应删除这些数据。备份不能只有数据库，也必须包含上传文件和密钥。保持相同的 Compose 项目名及部署环境变量，避免误接到新卷。
 
-当前稳定版：[`v2.0.0`](https://github.com/123qingyuan/StudyMindAI/releases/tag/v2.0.0)<br>
-直接下载：[`StudyMindAI.exe`](https://github.com/123qingyuan/StudyMindAI/releases/download/v2.0.0/StudyMindAI.exe)
+> **不要执行 `docker compose down -v` 或 `docker volume prune`：可能删除数据。** 回退不保证数据库向后兼容，应在独立项目恢复升级前备份并验证。Windows 更新也应先关闭应用、备份完整数据目录，再替换 EXE，保留原数据。
 
-> [!TIP]
-> 桌面版默认采用 SQLite 与关键词检索，优先保证单文件交付和离线可用。需要 MySQL、Qdrant 本地向量库或语义嵌入时，使用源码部署版。
+完整配置、停机一致性备份、恢复、HTTPS 示例和验收命令见 **[Linux 部署文档](docs/LINUX.md)**。
 
-### 方案二：从源码运行
+### Linux CI 的实际结果
 
-适合开发、二次修改或启用完整的 MySQL + Qdrant 能力。详见[源码运行](#源码运行)。
+已核对 [Actions 运行 36524138537](https://github.com/123qingyuan/StudyMindAI/actions/runs/36524138537)：提交 `040161e6b922fd1fb26102cffdc82151c9af118c`，Ubuntu 24.04 / amd64，结果 **success**。日志中可见：
 
-## 界面预览
+- 实际镜像构建、健康启动和 `Homepage OK`。
+- 注册/登录与首页静态资源检查通过；非 root UID `10001` 下的 OCR、PDF、DOCX、关键词检查通过。
+- 读回 28 类、2800 题、31 份文档；这是内置内容数量检查，不是课程质量或每题正确性的认证。
+- 重复部署后 `.env.linux: OK`；强制重建后旧会话仍可用，数据数量与密钥摘要一致。
 
-以下为历史版本真实页面截图（非 2.0 外观）；账号信息已替换为演示数据。2.0 本地验收截图与报告见交付目录。
+**保留限制：**该次运行的日志附件未上传（`No files were found`），另有 Actions Node.js 20 弃用警告；以上依据运行日志，不声称存在可下载的验收附件。工作流部分命令通过 `tee` 管道执行且未显式启用 `pipefail`，不能只凭绿色状态判断每条命令成功。本次已核对具体输出；CI 不覆盖真实 AI 供应商、ARM64、公网安全或长期负载。此次文档更新不修改工作流代码。
 
-### 学习总览
+## 功能与边界
 
-真实聚合今日时长、任务完成率、知识资料、练习数量、近期考试和 14 天学习节奏。
+以下按当前挂载的页面与后端入口整理，不以保留的源码文件推断已交付功能。
 
-<p align="center">
-  <a href="docs/images/dashboard.png"><img src="docs/images/dashboard.png" width="100%" alt="StudyMind AI 学习总览"></a>
-</p>
-
-### 多专业知识库
-
-按专业组织资料、分块、知识点和笔记；支持本地检索、原文查看和带来源的知识问答。
-
-<p align="center">
-  <a href="docs/images/knowledge.png"><img src="docs/images/knowledge.png" width="100%" alt="StudyMind AI 多专业知识库"></a>
-</p>
-
-<details>
-<summary><strong>查看更多页面截图</strong></summary>
-
-#### 我的学习
-
-<p align="center">
-  <a href="docs/images/learning.png"><img src="docs/images/learning.png" width="100%" alt="StudyMind AI 我的学习"></a>
-</p>
-
-#### 多专业练习题库
-
-<p align="center">
-  <a href="docs/images/questions.png"><img src="docs/images/questions.png" width="100%" alt="StudyMind AI 多专业练习题库"></a>
-</p>
-
-#### 数据与报告
-
-<p align="center">
-  <a href="docs/images/analytics.png"><img src="docs/images/analytics.png" width="100%" alt="StudyMind AI 数据与报告"></a>
-</p>
-
-#### 空间设置
-
-<p align="center">
-  <a href="docs/images/settings.png"><img src="docs/images/settings.png" width="100%" alt="StudyMind AI 空间设置"></a>
-</p>
-
-</details>
-
-## 核心能力
-
-| 模块 | 已实现能力 |
+| 能力 | 当前范围 |
 |---|---|
-| 账户与安全 | 邮箱注册、登录与退出；Argon2 密码哈希；签名令牌；会话撤销；用户数据隔离 |
-| 学习总览 | 任务、学习时长、考试、文档、题目和会话统计；14 天趋势与快捷入口 |
-| 任务与计划 | 任务新增、状态、优先级、分类、截止日期和删除；按日期范围建立非 AI 学习计划草案，确认后写入真实任务 |
-| 课程与考试 | 课程、考试安排、学习记录与时间统计 |
-| AI 学习助手 | 6 种学习模式、连续上下文、SSE 流式输出、停止/重新生成、Markdown、代码高亮、LaTeX、回答复制 |
-| 文档与 OCR | TXT、Markdown、DOCX、PDF 文本提取；扫描 PDF OCR；图片 OCR；上传限制与用户隔离 |
-| 多专业知识库 | 知识空间、文档分块、知识点、笔记、本地检索、语义检索、关键词复核、原文引用 |
-| 智能练习题库 | 自定义学科；6 种题型；3 档难度；限定知识库来源；手工出题；确定性客观题评分；统计汇总 |
-| 数据与报告 | 学习趋势、学科时间分布、任务完成情况、练习统计、基于真实记录的日报/周报 |
-| 桌面交付 | PyInstaller 单文件 EXE；WebView2 内嵌窗口；应用关闭时同步停止本地后端 |
+| 任务与学习记录 | 任务、课程、考试、时长记录；人工学习计划草案确认后写入任务 |
+| 资料与 OCR | TXT、Markdown、DOCX、PDF 解析，扫描件与图片 OCR |
+| 知识库 | 资料组织、分块、知识点、笔记、原文查看；默认关键词检索 |
+| 练习题库 | 内置来源标记题库、手工题目、客观题确定性评分、练习记录 |
+| 数据与报告 | 依据实际记录生成趋势和日报/周报摘要，不冒充模型生成报告 |
+| 可选 AI | 个人设置、真实连接测试、六种对话模式、流式对话；知识库问答依赖可用模型与检索证据 |
+| 桌面外观 | 浅色 / 深色 / 跟随系统；独立 WebView2 窗口 |
 
-### AI 不可用时仍能做什么
+**无需在线模型**即可管理任务、资料、OCR、笔记、关键词检索、手工题目、客观题评分与统计。模型不可用时，不用固定内容伪装为 AI 回答。
 
-- 创建并管理任务、课程、考试和学习记录
-- 上传文档、执行 OCR、查看来源、维护笔记
-- 使用关键词检索知识分块
-- 手工添加题目并进行客观题确定性评分
-- 查看真实统计和本地学习报告
+当前不承诺：
 
-应用不会用固定输出假装 AI 在线。需要模型的按钮会给出明确错误，其余功能继续工作。
-
-## 技术架构
-
-```text
-┌──────────────────────────────────────────────────────────┐
-│ Windows 桌面应用                                         │
-│ pywebview + Edge WebView2                                │
-│                                                          │
-│  Vue 3 + TypeScript + Vite + Pinia + Element Plus        │
-│                         │ HTTP / SSE                     │
-│  FastAPI + SQLAlchemy + Argon2 + PyJWT                   │
-│          │                    │                 │         │
-│  SQLite / MySQL       Qdrant / 关键词检索      OCR/文档解析 │
-│                                                          │
-│ 数据目录：%LOCALAPPDATA%\StudyMindAI\data                │
-└──────────────────────────────────────────────────────────┘
-```
-
-### 主要技术栈
-
-- **前端**：Vue 3、TypeScript、Vite、Vue Router、Pinia、Element Plus
-- **富文本**：Markdown-it、DOMPurify、Highlight.js、KaTeX
-- **后端**：FastAPI、Uvicorn、Pydantic、SQLAlchemy
-- **安全**：Argon2、PyJWT、Cryptography
-- **文档处理**：PyMuPDF、python-docx、Pillow、RapidOCR ONNX Runtime
-- **知识检索**：Qdrant Client、FastEmbed、scikit-learn；桌面版提供关键词回退
-- **桌面封装**：pywebview、Edge WebView2、PyInstaller
-- **测试**：pytest、pytest-asyncio、Playwright
-
-## 源码运行
-
-### 环境要求
-
-- Windows 10/11
-- Python 3.13
-- Node.js 与 npm
-- 可选：MySQL 8、Qdrant 或兼容的本地向量配置
-
-### 1. 安装前端依赖并构建
-
-```powershell
-cd E:\StudyMindAI\frontend
-npm ci
-npm run typecheck
-npm run build
-```
-
-### 2. 安装后端依赖
-
-```powershell
-cd E:\StudyMindAI\backend
-python -m venv .venv
-.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-### 3. 启动应用
-
-```powershell
-cd E:\StudyMindAI
-backend\.venv\Scripts\python.exe scripts\launch.py
-```
-
-浏览器模式访问 <http://127.0.0.1:8765>。Windows 下也可以双击根目录的 `start.bat`。
+- **AI 出题、AI 计划生成、主观题模型评阅**尚未开放。
+- **Agent 自动执行、知识图谱、Learning Twin**不作为已交付能力宣传。
+- 每日练习是已有题池轮换，**不是每日自动新增题目**。旧版扩展资料仍标记“含重复待整理”，数量不代表优质长课程。
+- Windows EXE 和默认 Linux 镜像均以关键词检索为基线。Linux 不含 Qdrant/FastEmbed 或向量模型，设置保持 `keyword`；切换选项不等于安装了语义检索能力。
+- 当前不承诺生产级多 worker、Redis/Celery 队列或大规模多租户部署。
 
 ## 配置 AI
 
-> v2.0.0 已包含个人 AI 设置与对话入口。配置保存不等于连接成功；用户个人中转站尚未验证成功，本次 2.0 验收没有进行真实供应商联网测试。
+在应用内进入 **空间设置 → 个人 AI 设置**，填写自己的服务商、精确模型 ID、基础地址与密钥，保存后点击 **测试已保存连接**。测试会发送固定问候，可能产生少量费用。
 
-应用内进入 **空间设置 → 个人 AI 设置**，保存服务商、模型、基础地址与密钥，再点击 **测试已保存连接**。测试发送固定问候且可能产生少量费用。配置存在不代表在线。个人密钥加密保存在当前用户数据目录，删除个人配置后回退服务器默认。桌面 EXE 不携带开发者 `.env` 或密钥。
+- **保存配置 ≠ 供应商可用。** 应以真实连接测试及实际对话的结果为准。
+- 当前用户的个人中转站**尚未验证成功**；本次文档更新及 Linux CI 没有进行真实供应商联网验收，不承诺任意中转兼容。
+- 个人密钥加密保存；删除个人配置后回退服务器默认配置（若有）。发布 EXE 和 Linux 镜像不预置开发者密钥。
+- 使用在线模型会向所配置服务商发送相应请求内容；本地优先不等于启用 AI 后数据绝不离机。
+- 不要公开 `.env`、密钥、令牌、数据库或私有上传；不要为绕过连接错误随意开启私网端点访问。
 
-源码服务器也可复制示例配置：
+## 开发与项目导航
 
-```powershell
-Copy-Item .env.example backend\.env
-```
+前端为 Vue 3 + TypeScript，后端为 FastAPI + SQLAlchemy；Windows 使用 pywebview/WebView2 + PyInstaller，Linux 使用 Docker Compose。Linux 安装与运行以 [docs/LINUX.md](docs/LINUX.md) 为准，勿直接套用 Windows Python 版本和桌面依赖。
 
-填写兼容 OpenAI API 的模型信息：
+| 文件 / 目录 | 用途 |
+|---|---|
+| [PRODUCT.md](PRODUCT.md) / [DESIGN.md](DESIGN.md) | 产品范围与设计系统 |
+| [CHANGELOG.md](CHANGELOG.md) | 版本更新记录 |
+| [backend/](backend/) / [frontend/](frontend/) | 后端与前端源码 |
+| [deploy.sh](deploy.sh) / [compose.yaml](compose.yaml) / [Dockerfile](Dockerfile) | Linux 部署入口与镜像 |
+| [backend/requirements-linux.txt](backend/requirements-linux.txt) | Linux Python 3.12 哈希锁定依赖 |
+| [scripts/build_exe.bat](scripts/build_exe.bat) / [StudyMindAI.spec](StudyMindAI.spec) | Windows EXE 构建 |
+| [.github/workflows/linux-deploy.yml](.github/workflows/linux-deploy.yml) | Linux 集成测试定义 |
 
-```dotenv
-MODEL_PROVIDER=openai-compatible
-MODEL_NAME=你的模型名称
-API_KEY=你的接口密钥
-BASE_URL=https://api.openai.com/v1
-```
+## 反馈与数据安全
 
-- `API_KEY` 只在后端使用，不返回浏览器。
-- 配置存在不等于服务可用；应用会以一次真实请求结果判断模型是否能工作。
-- 生产环境不要开启 `AI_ALLOW_PRIVATE_ENDPOINTS`，除非管理员明确允许受信任的私网模型地址。
-- `.env`、数据库、模型缓存和用户上传内容均不应提交到 Git。
+在 [Issues](https://github.com/123qingyuan/StudyMindAI/issues) 提交系统版本、EXE 版本或 Git revision、部署方式、复现步骤和已脱敏日志。不要附带真实密钥、令牌、数据库或个人资料。
 
-## 构建 Windows EXE
-
-项目提供一键构建脚本：
-
-```powershell
-cd E:\StudyMindAI
-scripts\build_exe.bat
-```
-
-脚本会依次执行：
-
-1. `npm run typecheck`
-2. `npm run build`
-3. `PyInstaller --clean StudyMindAI.spec`
-
-输出文件：`dist\v2.0.0\StudyMindAI.exe`。
-
-## 项目结构
-
-```text
-StudyMindAI/
-├─ backend/
-│  ├─ app/                 # FastAPI、认证、数据库、AI、知识库与文档处理
-│  ├─ tests/               # 后端测试
-│  └─ requirements.txt
-├─ frontend/
-│  ├─ src/                 # Vue 页面、组件、状态与 API 客户端
-│  └─ package.json
-├─ data/
-│  ├─ builtin/             # 受控内置学习资料
-│  └─ question_bank_manifest.json
-├─ docs/images/            # README 产品截图
-├─ logo/                   # SVG 标志与应用图标
-├─ scripts/
-│  ├─ desktop_main.py      # WebView2 桌面入口
-│  ├─ build_exe.bat        # Windows 构建脚本
-│  └─ launch.py            # 源码启动器
-├─ StudyMindAI.spec        # PyInstaller 配置
-├─ start.bat
-└─ README.md
-```
-
-## 数据、隐私与安全
-
-- 桌面数据默认保存在 `%LOCALAPPDATA%\StudyMindAI\data`。
-- 源码部署可通过 `DATABASE_URL` 使用 SQLite 或 MySQL。
-- 密码使用 Argon2 哈希，不以明文保存。
-- 上传文件、文档、笔记、知识库和题目按账户隔离。
-- 桌面服务只监听 `127.0.0.1:8765`，不默认暴露到局域网。
-- 登录令牌仅保存在当前 WebView/浏览器会话。
-- 内置资料为受控、带来源的起始内容；每个账户拥有独立副本，可编辑或删除。
-
-## 验证与测试
-
-### 后端测试
-
-```powershell
-cd E:\StudyMindAI\backend
-.venv\Scripts\python.exe -m pytest tests -q
-```
-
-### 前端检查
-
-```powershell
-cd E:\StudyMindAI\frontend
-npm run typecheck
-npm run build
-```
-
-### 项目验收脚本
-
-```powershell
-cd E:\StudyMindAI
-backend\.venv\Scripts\python.exe scripts\verify_documents.py
-backend\.venv\Scripts\python.exe scripts\verify_api.py
-backend\.venv\Scripts\python.exe scripts\verify_browser.py
-backend\.venv\Scripts\python.exe scripts\verify_completed_features.py
-backend\.venv\Scripts\python.exe scripts\verify_completed_browser.py
-```
-
-浏览器验收使用本机 Edge 和一次性账户，覆盖登录、Dashboard、任务、课程、考试、学习记录、计划发布、笔记、文档预览、AI 未配置边界、主要路由与移动端导航。
-
-## 常见问题
-
-<details>
-<summary><strong>双击 EXE 后窗口没有打开</strong></summary>
-
-确认系统已安装 Microsoft Edge WebView2 Runtime。Windows 10/11 通常已随 Edge 提供该运行时。应用日志位于 `%LOCALAPPDATA%\StudyMindAI\data\app.log`。
-</details>
-
-<details>
-<summary><strong>提示端口 8765 被占用</strong></summary>
-
-默认监听本机 `127.0.0.1:8765`；可用 `STUDYMIND_PORT` 指定独立端口。应用拒绝连接已被占用的端口，不会复用旧进程。
-</details>
-
-<details>
-<summary><strong>AI 按钮提示模型未配置或连接失败</strong></summary>
-
-在 `backend/.env` 或应用设置中填写正确的模型名称、接口密钥和基础地址。网络、余额、权限和模型名错误都会导致真实请求失败；应用不会伪造成功结果。
-</details>
-
-<details>
-<summary><strong>桌面版为什么默认不是语义检索</strong></summary>
-
-单文件版优先控制体积、启动复杂度和本地资源占用，因此默认使用关键词检索。源码版可启用 Qdrant 与中文嵌入模型 `BAAI/bge-small-zh-v1.5`。
-</details>
-
-## 当前边界
-
-- 桌面版默认使用 SQLite 与关键词检索；完整向量语义检索建议使用源码部署。
-- 本地 Qdrant 文件存储只允许一个进程持有，源码模式应保持单 Uvicorn worker。
-- Redis/Celery 异步队列和生产级多 worker 部署不在当前本地版本范围内。
-- 当前恢复个人 AI 设置、连接测试和流式对话；AI 出题、计划生成及主观题模型评阅尚未开放。
-- 当前仓库未声明开源许可证；代码可供查看，但在添加许可证前不要默认拥有复制、修改或再分发权利。
-
-## 参与与反馈
-
-发现问题或希望增加功能，可在 [Issues](https://github.com/123qingyuan/StudyMindAI/issues) 中提交。请附上：
-
-- Windows 版本与 StudyMind 版本
-- 重现步骤与实际现象
-- `%LOCALAPPDATA%\StudyMindAI\data\app.log` 中与问题相关的日志（提交前删除密钥、令牌和私人内容）
-
----
-
-<div align="center">
-  <strong>StudyMind AI</strong><br>
-  让学习留下真实的轨迹。
-</div>
+内置资料是带来源的起始内容，每个账户拥有独立副本，可编辑或删除；不是用户原创或现场 AI 生成。仓库尚未声明开源许可证，公开可查看不等于已授予任意修改、再分发许可；第三方资料还须遵守各自来源条款。

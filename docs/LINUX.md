@@ -1,6 +1,6 @@
 # Linux 一键部署（Docker Compose）
 
-> 当前交付的本机是 Windows，未安装 Docker、WSL 没有 Linux 发行版。因此 **Linux 镜像构建/启动尚未在本机验证**。已有真实 Linux 集成测试 `.github/workflows/linux-deploy.yml`，须在推送后由 Actions 或 Linux 主机执行并检查结果；不能把语法检查或 Windows API 测试当作 Linux 部署成功。
+> Linux 集成测试已在 Ubuntu 24.04 / amd64 执行：[运行 36524138537](https://github.com/123qingyuan/StudyMindAI/actions/runs/36524138537)，提交 `040161e6b922fd1fb26102cffdc82151c9af118c`，结果 success。已核对日志中的镜像构建、健康启动、HTTP/OCR/内置内容及重建持久化输出。Windows 开发机本身未运行 Linux 容器；CI 不代表真实 AI 供应商或公网生产验收。该次日志附件上传缺失，另有 Node.js 20 弃用警告；部分 tee 管道未显式启用 pipefail，不能仅凭绿色状态判断所有命令成功。本次仅更新文档，不修改工作流。
 
 ## 前提与一条命令
 
@@ -8,9 +8,11 @@
 
 完整源码必须包含 `data/question_bank_manifest.json` 及 `data/builtin/legacy-expansion-v1/{manifest.json,01.md…07.md}`。这些是受控内置资料，不是用户数据库；旧版仅克隆代码而缺少此目录会导致注册失败。本次已添加精确 Git 白名单，交付/提交时必须包含它们。
 
-在项目根目录执行：
+首次部署先克隆完整仓库（需 Git、Bash）；已有仓库则在项目根目录执行部署命令：
 
 ```bash
+git clone https://github.com/123qingyuan/StudyMindAI.git
+cd StudyMindAI
 bash deploy.sh
 # 若已保留可执行位，也可 ./deploy.sh
 ```
@@ -111,7 +113,7 @@ docker compose --env-file .env.linux up -d --wait --wait-timeout 180
 
 ## 可重复验收
 
-`.github/workflows/linux-deploy.yml` 在 Ubuntu 24.04 上执行完整镜像构建、非 root OCR、首页静态资源、201 注册、409 重复、401 错误密码、200 登录、2800 题/31 文档读回、重复部署、配置文件不变、强制重建后的旧 token/密钥/加密样本及上传持久化。失败保留日志 artifact，不包含临时账号密码/令牌。
+`.github/workflows/linux-deploy.yml` 在 Ubuntu 24.04 上执行完整镜像构建、非 root OCR、首页静态资源、201 注册、409 重复、401 错误密码、200 登录、2800 题/31 文档读回、重复部署、配置文件不变、强制重建后的旧 token/密钥/加密样本及上传持久化。工作流配置了日志 artifact 上传，但上述运行未找到可上传文件，应查看 Actions 运行日志；不要假定附件存在，也不要上传临时账号密码/令牌。
 
 手动运行同样测试时应使用独立测试项目与空卷，不能指向现有生产数据：
 
