@@ -6,7 +6,7 @@
 
   <p>
     <a href="https://github.com/123qingyuan/StudyMindAI/releases/latest"><img alt="最新版本" src="https://img.shields.io/github/v/release/123qingyuan/StudyMindAI?display_name=tag&sort=semver&style=flat-square"></a>
-    <a href="https://github.com/123qingyuan/StudyMindAI/releases/download/v1.2.1/StudyMindAI.exe"><img alt="Windows 下载" src="https://img.shields.io/badge/Windows-下载_EXE-5b5bd6?style=flat-square&logo=windows11&logoColor=white"></a>
+    <a href="https://github.com/123qingyuan/StudyMindAI/releases/download/v2.0.0/StudyMindAI.exe"><img alt="Windows 下载" src="https://img.shields.io/badge/Windows-下载_EXE-5b5bd6?style=flat-square&logo=windows11&logoColor=white"></a>
     <img alt="Python" src="https://img.shields.io/badge/Python-3.13-3776AB?style=flat-square&logo=python&logoColor=white">
     <img alt="Vue" src="https://img.shields.io/badge/Vue-3-42b883?style=flat-square&logo=vuedotjs&logoColor=white">
     <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.141-009688?style=flat-square&logo=fastapi&logoColor=white">
@@ -47,7 +47,9 @@
 
 ## 本地 2.0.0
 
-本次交付文件：`dist/v2.0.0/StudyMindAI.exe`，**未提交 Git、未发布**。新增深色 / 浅色 / 跟随系统三模式，登录、全路由与弹窗共享语义主题。见 [设计系统](DESIGN.md)、[产品边界](PRODUCT.md) 和 [更新记录](CHANGELOG.md)。下方在线下载仍是历史发布版本。
+本次交付文件：`dist/v2.0.0/StudyMindAI.exe`，已发布至 [v2.0.0](https://github.com/123qingyuan/StudyMindAI/releases/tag/v2.0.0)。新增深色 / 浅色 / 跟随系统三模式，登录、全路由与弹窗共享语义主题。见 [设计系统](DESIGN.md)、[产品边界](PRODUCT.md) 和 [更新记录](CHANGELOG.md)。完整 Learning OS 路线图尚未全部实现。
+
+![2.0 深色工作台](docs/images/dashboard-v2-dark.png)
 
 ## 快速开始
 
@@ -57,8 +59,8 @@
 2. 双击运行，在独立的 **StudyMind AI · 智学助手** 窗口中注册或登录。
 3. 用户数据保存在 `%LOCALAPPDATA%\StudyMindAI\data`。
 
-当前稳定版：[`v1.2.1`](https://github.com/123qingyuan/StudyMindAI/releases/tag/v1.2.1)<br>
-直接下载：[`StudyMindAI.exe`](https://github.com/123qingyuan/StudyMindAI/releases/download/v1.2.1/StudyMindAI.exe)
+当前稳定版：[`v2.0.0`](https://github.com/123qingyuan/StudyMindAI/releases/tag/v2.0.0)<br>
+直接下载：[`StudyMindAI.exe`](https://github.com/123qingyuan/StudyMindAI/releases/download/v2.0.0/StudyMindAI.exe)
 
 > [!TIP]
 > 桌面版默认采用 SQLite 与关键词检索，优先保证单文件交付和离线可用。需要 MySQL、Qdrant 本地向量库或语义嵌入时，使用源码部署版。
@@ -206,7 +208,7 @@ backend\.venv\Scripts\python.exe scripts\launch.py
 
 ## 配置 AI
 
-> 本节描述当前工作区源码及本地重建包的功能，**不代表上方历史 v1.2.1 下载包已经更新**。本次修复未提交或发布。已在本地重建 EXE 中验证现有项目上游的普通请求与 SSE 流式请求成功；这只是本次测试结果，不保证持续在线。
+> v2.0.0 已包含个人 AI 设置与对话入口。配置保存不等于连接成功；用户个人中转站尚未验证成功，本次 2.0 验收没有进行真实供应商联网测试。
 
 应用内进入 **空间设置 → 个人 AI 设置**，保存服务商、模型、基础地址与密钥，再点击 **测试已保存连接**。测试发送固定问候且可能产生少量费用。配置存在不代表在线。个人密钥加密保存在当前用户数据目录，删除个人配置后回退服务器默认。桌面 EXE 不携带开发者 `.env` 或密钥。
 
